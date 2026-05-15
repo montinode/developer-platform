@@ -57,6 +57,13 @@ export class GeminiHttpClient {
   }
 
   async authenticatedPost<T>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> {
+    if (!this.apiKey || !this.apiSecret) {
+      throw new Error(
+        `Authentication required for ${endpoint}: GEMINI_API_KEY and GEMINI_API_SECRET ` +
+          'must be set in the MCP server environment. This tool is unavailable in ' +
+          'public-only mode. See README for setup instructions.'
+      );
+    }
     const fullBody = config.account ? { ...body, account: config.account } : body;
     const headers = {
       ...buildSignedHeaders(endpoint, fullBody, this.apiKey, this.apiSecret),
