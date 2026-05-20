@@ -2,7 +2,8 @@ import { promises as fs } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execFile } from 'node:child_process';
+import { defaultRunner } from '../supervisor/runner.js';
+import type { ShellRunner } from '../supervisor/types.js';
 
 export const MACOS_SENDER_BUNDLE_ID = 'Gemini.MCP.Alerts';
 export const MACOS_SENDER_APP_NAME = 'Gemini MCP Alerts.app';
@@ -12,6 +13,8 @@ export interface MacosSenderOptions {
   installRoot?: string;
   /** Defaults to the bundled `assets/gemini-mcp.icns` next to dist/. */
   icnsSource?: string;
+  /** Override the shell runner — primarily for tests. */
+  run?: ShellRunner;
 }
 
 export interface MacosSenderInstallResult {
@@ -40,6 +43,7 @@ export async function installMacosSenderBundle(
   const macosDir = join(contentsDir, 'MacOS');
   const resourcesDir = join(contentsDir, 'Resources');
   const icnsSource = opts.icnsSource ?? defaultIcnsSource();
+  const run = opts.run ?? defaultRunner;
 
   await fs.mkdir(macosDir, { recursive: true });
   await fs.mkdir(resourcesDir, { recursive: true });
@@ -60,7 +64,8 @@ export async function installMacosSenderBundle(
     );
   }
 
-  const registered = await registerBundle(installRoot);
+  const result = await run(LSREGISTER_PATH, ['-f', installRoot]);
+  const registered = result.code === 0;
   if (!registered) {
     warnings.push(
       'lsregister did not exit cleanly; macOS may not pick up the new app icon until you log out and back in',
@@ -72,8 +77,9 @@ export async function installMacosSenderBundle(
 
 export async function uninstallMacosSenderBundle(opts: MacosSenderOptions = {}): Promise<void> {
   const installRoot = opts.installRoot ?? join(homedir(), 'Applications', MACOS_SENDER_APP_NAME);
+  const run = opts.run ?? defaultRunner;
   // Best-effort un-registration before removing — silent on failure.
-  await runLsregister(['-u', installRoot]).catch(() => undefined);
+  await run(LSREGISTER_PATH, ['-u', installRoot]).catch(() => undefined);
   await fs.rm(installRoot, { recursive: true, force: true });
 }
 
@@ -109,24 +115,6 @@ export function buildInfoPlist(): string {
 
 const LSREGISTER_PATH =
   '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister';
-
-async function registerBundle(bundlePath: string): Promise<boolean> {
-  try {
-    await runLsregister(['-f', bundlePath]);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function runLsregister(args: string[]): Promise<void> {
-  return new Promise((resolve, reject) => {
-    execFile(LSREGISTER_PATH, args, { timeout: 10_000 }, (err) => {
-      if (err) return reject(err);
-      resolve();
-    });
-  });
-}
 
 function defaultIcnsSource(): string {
   // dist/alerts/notifier/macos-sender.js -> mcp-server root -> assets/.

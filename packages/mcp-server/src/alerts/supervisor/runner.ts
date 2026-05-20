@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process';
-import type { ShellRunner } from './types.js';
+import type { ShellRunResult, ShellRunner } from './types.js';
 
 export const defaultRunner: ShellRunner = (command, args) =>
   new Promise((resolve) => {
@@ -17,3 +17,14 @@ export const defaultRunner: ShellRunner = (command, args) =>
       },
     );
   });
+
+export function runPowerShell(run: ShellRunner, script: string): Promise<ShellRunResult> {
+  return run('powershell.exe', [
+    '-NoProfile',
+    '-NonInteractive',
+    '-ExecutionPolicy',
+    'Bypass',
+    '-Command',
+    script,
+  ]);
+}

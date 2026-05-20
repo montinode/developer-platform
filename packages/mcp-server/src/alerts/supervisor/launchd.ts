@@ -1,9 +1,10 @@
 import { promises as fs } from 'node:fs';
 import { homedir, userInfo } from 'node:os';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { writeAtomic } from '../paths.js';
 import { defaultRunner } from './runner.js';
 import {
+  defaultDaemonPath,
   pickWhitelistedEnv,
   type InstallOptions,
   type InstallResult,
@@ -140,23 +141,4 @@ function escapeXml(s: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
-}
-
-function defaultDaemonPath(): string {
-  // src/alerts/supervisor/launchd.ts -> when compiled to dist/alerts/supervisor/launchd.js
-  // the daemon entry sits at dist/alerts/daemon/index.js (sibling).
-  const here = dirname(fileURLToPath(import.meta.url));
-  return join(here, '..', 'daemon', 'index.js');
-}
-
-async function writeAtomic(path: string, content: string, mode: number): Promise<void> {
-  const tmp = `${path}.${process.pid}.${Date.now()}.tmp`;
-  const handle = await fs.open(tmp, 'w', mode);
-  try {
-    await handle.writeFile(content, 'utf8');
-    await handle.sync();
-  } finally {
-    await handle.close();
-  }
-  await fs.rename(tmp, path);
 }

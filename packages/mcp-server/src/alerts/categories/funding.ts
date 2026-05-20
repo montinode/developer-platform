@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { CategoryDef } from './spec.js';
-import { compareNumeric } from './spec.js';
+import { compareNumeric, toFinite } from './spec.js';
 
 const params = z
   .object({
@@ -29,11 +29,9 @@ export const fundingRateThreshold: CategoryDef<
     if (snap.symbol.toLowerCase() !== p.symbol.toLowerCase()) {
       return { triggered: false };
     }
-    const rate = Number(snap.fundingRate);
-    const threshold = Number(p.threshold);
-    if (!Number.isFinite(rate) || !Number.isFinite(threshold)) {
-      return { triggered: false };
-    }
+    const rate = toFinite(snap.fundingRate);
+    const threshold = toFinite(p.threshold);
+    if (rate === null || threshold === null) return { triggered: false };
     if (!compareNumeric(p.direction, rate, threshold)) return { triggered: false };
     return {
       triggered: true,

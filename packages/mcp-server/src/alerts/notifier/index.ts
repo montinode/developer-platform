@@ -58,9 +58,7 @@ export function createNotifier(deps: NotifierDeps = {}): Notifier {
 
   return async (event: AlertEvent) => {
     const isTest = event.reason.startsWith(TEST_FIRE_PREFIX);
-    const title = isTest
-      ? `[TEST] ${event.ruleName}`
-      : `${event.ruleName}`;
+    const title = isTest ? `[TEST] ${event.ruleName}` : event.ruleName;
     await send({
       title,
       message: event.reason,

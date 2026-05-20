@@ -1,3 +1,15 @@
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+/**
+ * Resolves the daemon entry sibling to the supervisor module when compiled
+ * (dist/alerts/supervisor/* → dist/alerts/daemon/index.js).
+ */
+export function defaultDaemonPath(): string {
+  const here = dirname(fileURLToPath(import.meta.url));
+  return join(here, '..', 'daemon', 'index.js');
+}
+
 export interface InstallOptions {
   /** Absolute path to the node binary. Defaults to `process.execPath`. */
   nodePath?: string;

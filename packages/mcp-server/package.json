@@ -10,7 +10,7 @@
     "dist/",
     "assets/",
     "README.md",
-    "WEBSOCKET.md"
+    "ALERTS.md"
   ],
   "scripts": {
     "build": "tsc",

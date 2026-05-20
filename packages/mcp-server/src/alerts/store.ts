@@ -1,11 +1,11 @@
 import { promises as fs } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { AlertRule, AlertsFile } from './types.js';
 import { DEFAULT_COOLDOWN_MS } from './types.js';
+import { GEMINI_MCP_DIR, isENOENT, writeAtomic } from './paths.js';
 
-export const DEFAULT_ALERTS_DIR = join(homedir(), '.gemini-mcp');
+export const DEFAULT_ALERTS_DIR = GEMINI_MCP_DIR;
 export const DEFAULT_ALERTS_FILE = join(DEFAULT_ALERTS_DIR, 'alerts.json');
 
 const EMPTY_FILE: AlertsFile = { version: 1, rules: [] };
@@ -99,19 +99,6 @@ export class AlertStore {
 
   async write(file: AlertsFile): Promise<void> {
     await fs.mkdir(this.dir, { recursive: true });
-    const tmp = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;
-    const data = `${JSON.stringify(file, null, 2)}\n`;
-    const handle = await fs.open(tmp, 'w', 0o600);
-    try {
-      await handle.writeFile(data, 'utf8');
-      await handle.sync();
-    } finally {
-      await handle.close();
-    }
-    await fs.rename(tmp, this.filePath);
+    await writeAtomic(this.filePath, `${JSON.stringify(file, null, 2)}\n`);
   }
-}
-
-function isENOENT(err: unknown): boolean {
-  return !!err && typeof err === 'object' && (err as NodeJS.ErrnoException).code === 'ENOENT';
 }

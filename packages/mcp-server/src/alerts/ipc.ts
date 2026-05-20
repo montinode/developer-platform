@@ -1,8 +1,8 @@
 import { promises as fs } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
+import { GEMINI_MCP_DIR, writeAtomic } from './paths.js';
 
-export const DEFAULT_DAEMON_META_FILE = join(homedir(), '.gemini-mcp', 'daemon.json');
+export const DEFAULT_DAEMON_META_FILE = join(GEMINI_MCP_DIR, 'daemon.json');
 
 export interface DaemonMeta {
   pid: number;
@@ -38,15 +38,7 @@ export async function writeDaemonMeta(
   path: string = DEFAULT_DAEMON_META_FILE,
 ): Promise<void> {
   await fs.mkdir(dirname(path), { recursive: true });
-  const tmp = `${path}.${process.pid}.${Date.now()}.tmp`;
-  const handle = await fs.open(tmp, 'w', 0o600);
-  try {
-    await handle.writeFile(`${JSON.stringify(meta, null, 2)}\n`, 'utf8');
-    await handle.sync();
-  } finally {
-    await handle.close();
-  }
-  await fs.rename(tmp, path);
+  await writeAtomic(path, `${JSON.stringify(meta, null, 2)}\n`);
 }
 
 export async function deleteDaemonMeta(path: string = DEFAULT_DAEMON_META_FILE): Promise<void> {

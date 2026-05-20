@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { defaultRunner } from './runner.js';
+import { defaultRunner, runPowerShell } from './runner.js';
 import type { ShellRunner } from './types.js';
 
 export const AUMID = 'Gemini.MCP.Alerts';
@@ -62,22 +62,12 @@ export async function installAumidShortcut(
   const run = deps.run ?? defaultRunner;
   await fs.mkdir(dirname(opts.shortcutPath), { recursive: true });
 
-  const script = buildAumidScript(opts);
-  // -Command receives the script via stdin would be cleaner, but execFile's
-  // arg model is simpler and child_process spawns cmd.exe style anyway.
-  const result = await run('powershell.exe', [
-    '-NoProfile',
-    '-NonInteractive',
-    '-ExecutionPolicy',
-    'Bypass',
-    '-Command',
-    script,
-  ]);
+  const result = await runPowerShell(run, buildAumidScript(opts));
   return { ok: result.code === 0, stderr: result.stderr };
 }
 
-function psQuote(s: string): string {
-  // PowerShell single-quoted strings: any embedded ' becomes ''.
+/** Quote for a PowerShell single-quoted string; embedded ' becomes ''. */
+export function psQuote(s: string): string {
   return `'${s.replace(/'/g, "''")}'`;
 }
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { CategoryDef } from './spec.js';
-import { compareNumeric } from './spec.js';
+import { compareNumeric, toFinite } from './spec.js';
 
 function formatDuration(ms: number): string {
   if (ms < 1000) return `${ms}ms`;
@@ -51,11 +51,9 @@ export const priceThreshold: CategoryDef<PriceThresholdParams, PriceSnapshot> = 
   datasource: 'ws.price',
   defaultPollMs: 0,
   evaluate(params, snapshot) {
-    const value = Number(snapshot.price);
-    const threshold = Number(params.threshold);
-    if (!Number.isFinite(value) || !Number.isFinite(threshold)) {
-      return { triggered: false };
-    }
+    const value = toFinite(snapshot.price);
+    const threshold = toFinite(params.threshold);
+    if (value === null || threshold === null) return { triggered: false };
     const triggered = compareNumeric(params.direction, value, threshold);
     return triggered
       ? {
@@ -89,11 +87,9 @@ export const pricePercentChange: CategoryDef<PricePercentChangeParams, PricePerc
   datasource: 'ws.price',
   defaultPollMs: 0,
   evaluate(params, snapshot) {
-    const cur = Number(snapshot.price);
-    const base = Number(snapshot.baselinePrice);
-    if (!Number.isFinite(cur) || !Number.isFinite(base) || base === 0) {
-      return { triggered: false };
-    }
+    const cur = toFinite(snapshot.price);
+    const base = toFinite(snapshot.baselinePrice);
+    if (cur === null || base === null || base === 0) return { triggered: false };
     const change = ((cur - base) / base) * 100;
     const triggered =
       params.direction === 'above' ? change >= params.pct : change <= -params.pct;
@@ -124,12 +120,10 @@ export const priceAbsoluteChange: CategoryDef<PriceAbsoluteChangeParams, PricePe
   datasource: 'ws.price',
   defaultPollMs: 0,
   evaluate(params, snapshot) {
-    const cur = Number(snapshot.price);
-    const base = Number(snapshot.baselinePrice);
-    const delta = Number(params.delta);
-    if (!Number.isFinite(cur) || !Number.isFinite(base) || !Number.isFinite(delta)) {
-      return { triggered: false };
-    }
+    const cur = toFinite(snapshot.price);
+    const base = toFinite(snapshot.baselinePrice);
+    const delta = toFinite(params.delta);
+    if (cur === null || base === null || delta === null) return { triggered: false };
     const diff = cur - base;
     let triggered = false;
     if (params.direction === 'above') triggered = diff >= delta;

@@ -32,3 +32,10 @@ export function compareNumeric(
 ): boolean {
   return direction === 'above' ? value >= threshold : value <= threshold;
 }
+
+/** Parse to a finite number, or null if NaN/Infinity. Accepts string|number. */
+export function toFinite(value: string | number | undefined | null): number | null {
+  if (value === undefined || value === null) return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}

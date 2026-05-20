@@ -1,9 +1,9 @@
 import { promises as fs } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import type { AlertEvent } from './types.js';
+import { GEMINI_MCP_DIR, isENOENT } from './paths.js';
 
-export const DEFAULT_LOG_FILE = join(homedir(), '.gemini-mcp', 'alerts.log');
+export const DEFAULT_LOG_FILE = join(GEMINI_MCP_DIR, 'alerts.log');
 
 /**
  * Append a fired event as one JSON line. The file is rotated lazily by
@@ -26,7 +26,7 @@ export async function readRecentEvents(
   try {
     raw = await fs.readFile(path, 'utf8');
   } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return [];
+    if (isENOENT(err)) return [];
     throw err;
   }
   const lines = raw.split('\n').filter((l) => l.length > 0);

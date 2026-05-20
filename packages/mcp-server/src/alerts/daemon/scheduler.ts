@@ -201,7 +201,8 @@ export class Scheduler {
     for (const sym of needed) {
       if (this.subscribedSymbols.has(sym)) continue;
       await this.deps.ws.subscribe(sym);
-      const stop = this.deps.marketStore.onUpdate(sym, () => {
+      const stop = this.deps.marketStore.onUpdate(sym, (event) => {
+        if (event.kind !== 'price') return;
         this.track(this.onPriceUpdate(sym));
       });
       this.wsUnsubs.set(sym, stop);

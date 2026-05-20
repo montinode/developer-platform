@@ -37,6 +37,13 @@ function matches(p: { orderId?: string; clientOrderId?: string; symbol?: string 
   return p.orderId !== undefined || p.clientOrderId !== undefined || p.symbol !== undefined;
 }
 
+function indexOrders(snap: OrderSnapshot | undefined): Map<string, OrderRecord> | undefined {
+  if (!snap) return undefined;
+  const m = new Map<string, OrderRecord>();
+  for (const o of snap.orders) m.set(o.order_id, o);
+  return m;
+}
+
 function isFilled(o: OrderRecord): boolean {
   return (
     !o.is_live &&
@@ -52,10 +59,10 @@ export const orderFilled: CategoryDef<OrderFilledParams, OrderSnapshot> = {
   datasource: 'rest.orders',
   defaultPollMs: 10_000,
   evaluate(p, snap, prev) {
+    const priorById = indexOrders(prev);
     const newlyFilled = snap.orders.find((o) => {
       if (!matches(p, o) || !isFilled(o)) return false;
-      if (!prev) return true;
-      const prior = prev.orders.find((x) => x.order_id === o.order_id);
+      const prior = priorById?.get(o.order_id);
       return !prior || !isFilled(prior);
     });
     if (!newlyFilled) return { triggered: false };
@@ -85,13 +92,13 @@ export const orderStopTriggered: CategoryDef<OrderStopTriggeredParams, OrderSnap
   datasource: 'rest.orders',
   defaultPollMs: 10_000,
   evaluate(p, snap, prev) {
+    const priorById = indexOrders(prev);
     const tripped = snap.orders.find((o) => {
       if (!o.stop_price) return false;
-      if (!matches({ ...p }, o)) return false;
+      if (!matches(p, o)) return false;
       const triggered = !o.is_live && Number(o.executed_amount) > 0;
       if (!triggered) return false;
-      if (!prev) return true;
-      const prior = prev.orders.find((x) => x.order_id === o.order_id);
+      const prior = priorById?.get(o.order_id);
       const wasTriggered = prior && !prior.is_live && Number(prior.executed_amount) > 0;
       return !wasTriggered;
     });

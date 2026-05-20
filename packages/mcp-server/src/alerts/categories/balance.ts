@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { CategoryDef } from './spec.js';
+import { toFinite } from './spec.js';
 
 const params = z
   .object({
@@ -30,15 +31,15 @@ export const balanceChange: CategoryDef<BalanceChangeParams, BalanceSnapshot> = 
     if (snap.currency.toLowerCase() !== p.currency.toLowerCase()) {
       return { triggered: false };
     }
-    const cur = Number(snap.balance);
-    const before = Number(prev.balance);
-    if (!Number.isFinite(cur) || !Number.isFinite(before)) return { triggered: false };
+    const cur = toFinite(snap.balance);
+    const before = toFinite(prev.balance);
+    if (cur === null || before === null) return { triggered: false };
 
     const diff = p.direction === 'above' ? cur - before : before - cur;
 
     if (p.delta !== undefined) {
-      const delta = Number(p.delta);
-      if (!Number.isFinite(delta)) return { triggered: false };
+      const delta = toFinite(p.delta);
+      if (delta === null) return { triggered: false };
       if (diff >= delta) {
         return {
           triggered: true,

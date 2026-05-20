@@ -1,7 +1,7 @@
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { defaultRunner } from './runner.js';
+import { defaultRunner, runPowerShell } from './runner.js';
 import {
+  defaultDaemonPath,
   pickWhitelistedEnv,
   type InstallOptions,
   type InstallResult,
@@ -14,6 +14,7 @@ import {
   defaultIconDestPath,
   defaultShortcutPath,
   installAumidShortcut,
+  psQuote,
 } from './win32-aumid.js';
 
 export const TASK_NAME = 'GeminiMcpAlerts';
@@ -76,15 +77,7 @@ Start-ScheduledTask -TaskName ${psQuote(TASK_NAME)}
 
   async install(opts: InstallOptions = {}): Promise<InstallResult> {
     const warnings: string[] = [];
-    const script = this.buildRegisterScript(opts);
-    const result = await this.run('powershell.exe', [
-      '-NoProfile',
-      '-NonInteractive',
-      '-ExecutionPolicy',
-      'Bypass',
-      '-Command',
-      script,
-    ]);
+    const result = await runPowerShell(this.run, this.buildRegisterScript(opts));
     if (result.code !== 0) {
       warnings.push(
         `Register-ScheduledTask exited ${result.code}: ${result.stderr.trim() || result.stdout.trim()}`,
@@ -114,47 +107,31 @@ Start-ScheduledTask -TaskName ${psQuote(TASK_NAME)}
   }
 
   async uninstall(): Promise<void> {
-    await this.run('powershell.exe', [
-      '-NoProfile',
-      '-NonInteractive',
-      '-ExecutionPolicy',
-      'Bypass',
-      '-Command',
+    await runPowerShell(
+      this.run,
       `Unregister-ScheduledTask -TaskName ${psQuote(TASK_NAME)} -Confirm:$false`,
-    ]);
+    );
     if (this.appData) {
       const lnk = defaultShortcutPath(this.appData);
-      await this.run('powershell.exe', [
-        '-NoProfile',
-        '-NonInteractive',
-        '-ExecutionPolicy',
-        'Bypass',
-        '-Command',
+      await runPowerShell(
+        this.run,
         `Remove-Item -Force ${psQuote(lnk)} -ErrorAction SilentlyContinue`,
-      ]);
+      );
     }
   }
 
   async restart(): Promise<void> {
-    await this.run('powershell.exe', [
-      '-NoProfile',
-      '-NonInteractive',
-      '-ExecutionPolicy',
-      'Bypass',
-      '-Command',
+    await runPowerShell(
+      this.run,
       `Stop-ScheduledTask -TaskName ${psQuote(TASK_NAME)}; Start-ScheduledTask -TaskName ${psQuote(TASK_NAME)}`,
-    ]);
+    );
   }
 
   async status(): Promise<SupervisorStatus> {
-    const result = await this.run('powershell.exe', [
-      '-NoProfile',
-      '-NonInteractive',
-      '-ExecutionPolicy',
-      'Bypass',
-      '-Command',
+    const result = await runPowerShell(
+      this.run,
       `Get-ScheduledTask -TaskName ${psQuote(TASK_NAME)} -ErrorAction SilentlyContinue | ConvertTo-Json`,
-    ]);
+    );
     const installed = result.code === 0 && result.stdout.trim().length > 0;
     let running = false;
     try {
@@ -170,15 +147,6 @@ Start-ScheduledTask -TaskName ${psQuote(TASK_NAME)}
       raw: result.stdout,
     };
   }
-}
-
-function defaultDaemonPath(): string {
-  const here = dirname(fileURLToPath(import.meta.url));
-  return join(here, '..', 'daemon', 'index.js');
-}
-
-function psQuote(s: string): string {
-  return `'${s.replace(/'/g, "''")}'`;
 }
 
 export function joinAppData(...parts: string[]): string {
