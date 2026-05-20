@@ -3,7 +3,6 @@ import type { MarketDataStore } from '../../store/index.js';
 import { evaluateRule } from '../evaluator.js';
 import { getCategoryDef, listCategoryDefs } from '../categories/index.js';
 import type { AlertEvent, AlertRule } from '../types.js';
-import type { OrderRecord, OrderSnapshot } from '../categories/order.js';
 import type { BalanceSnapshot } from '../categories/balance.js';
 import type { TransferRecord, TransferSnapshot } from '../categories/transfer.js';
 import type { FundingRateSnapshot } from '../categories/funding.js';
@@ -12,7 +11,6 @@ import type { PredictionSnapshot } from '../categories/prediction.js';
 
 export interface SchedulerFetchers {
   balances: () => Promise<BalanceSnapshot[]>;
-  orders: () => Promise<OrderRecord[]>;
   transfers: () => Promise<TransferRecord[]>;
   fundingRate: (symbol: string) => Promise<FundingRateSnapshot>;
   positions: () => Promise<PositionSnapshot[]>;
@@ -64,7 +62,6 @@ export interface SchedulerStatus {
 
 const REST_DATASOURCES = [
   'rest.balances',
-  'rest.orders',
   'rest.transfers',
   'rest.funding_rate',
   'rest.positions',
@@ -327,8 +324,6 @@ export class Scheduler {
       switch (ds) {
         case 'rest.balances':
           return await this.runBalances(rules);
-        case 'rest.orders':
-          return await this.runOrders(rules);
         case 'rest.transfers':
           return await this.runTransfers(rules);
         case 'rest.funding_rate':
@@ -358,12 +353,6 @@ export class Scheduler {
       if (!snap) continue;
       await this.dispatch(rule, snap);
     }
-  }
-
-  private async runOrders(rules: AlertRule[]): Promise<void> {
-    const orders = await this.deps.fetchers.orders();
-    const snap: OrderSnapshot = { orders };
-    for (const rule of rules) await this.dispatch(rule, snap);
   }
 
   private async runTransfers(rules: AlertRule[]): Promise<void> {

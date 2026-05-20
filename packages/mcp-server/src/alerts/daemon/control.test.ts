@@ -12,7 +12,6 @@ import type { AlertEvent } from '../types.js';
 function noopFetchers(): SchedulerFetchers {
   return {
     balances: async () => [],
-    orders: async () => [],
     transfers: async () => [],
     fundingRate: async (s: string) => ({ symbol: s, fundingRate: '0' }),
     positions: async () => [],

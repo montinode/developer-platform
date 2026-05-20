@@ -19,7 +19,7 @@ interface Harness {
   marketStore: MarketDataStore;
   fetchers: SchedulerFetchers;
   fired: AlertEvent[];
-  calls: { balances: number; orders: number; transfers: number; positions: number; predictions: number; fundingRate: string[]; ws: { subscribe: string[]; unsubscribe: string[] } };
+  calls: { balances: number; transfers: number; positions: number; predictions: number; fundingRate: string[]; ws: { subscribe: string[]; unsubscribe: string[] } };
   scheduler: Scheduler;
   cleanup: () => void;
   setNow: (ts: number) => void;
@@ -35,7 +35,6 @@ function build(opts: {
   let now = opts.initialNow ?? Date.parse('2026-05-07T12:00:00.000Z');
   const calls = {
     balances: 0,
-    orders: 0,
     transfers: 0,
     positions: 0,
     predictions: 0,
@@ -46,10 +45,6 @@ function build(opts: {
   const fetchers: SchedulerFetchers = {
     balances: async () => {
       calls.balances++;
-      return [];
-    },
-    orders: async () => {
-      calls.orders++;
       return [];
     },
     transfers: async () => {
@@ -408,4 +403,3 @@ test('notifier failure does not block lastFiredAt update or future fires', async
     console.error = orig;
   }
 });
-

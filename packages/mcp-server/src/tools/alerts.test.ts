@@ -62,7 +62,7 @@ test('exports the documented tool surface', () => {
   }
 });
 
-test('categories returns 9 entries with paramsSchema and example for each', async () => {
+test('categories returns 8 entries with paramsSchema and example for each', async () => {
   const { tools, cleanup } = fresh();
   try {
     const cats = find(tools, 'gemini_alert_categories');
@@ -76,13 +76,11 @@ test('categories returns 9 entries with paramsSchema and example for each', asyn
         example: Record<string, unknown>;
       }>
     >(cats, {});
-    assert.strictEqual(result.length, 10);
+    assert.strictEqual(result.length, 8);
     const categoryNames = result.map((r) => r.category).sort();
     assert.deepStrictEqual(categoryNames, [
       'balance.change',
       'funding_rate.threshold',
-      'order.filled',
-      'order.stop_triggered',
       'position.liquidation_risk',
       'prediction.settled',
       'price.absolute_change',

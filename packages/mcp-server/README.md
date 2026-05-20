@@ -192,10 +192,10 @@ gemini_alert_categories       # discover rule shapes
 gemini_alert_create           # create a rule
 ```
 
-10 rule categories (price thresholds & moves, balance changes, order fills,
-stop triggers, funding rates, deposit confirmations, liquidation risk,
-prediction settlements). See [ALERTS.md](ALERTS.md) for the full tool
-reference, rule schemas, and file locations.
+8 rule categories (price thresholds & moves, balance changes, funding rates,
+deposit confirmations, liquidation risk, prediction settlements). See
+[ALERTS.md](ALERTS.md) for the full tool reference, rule schemas, and file
+locations.
 
 ## Documentation
 

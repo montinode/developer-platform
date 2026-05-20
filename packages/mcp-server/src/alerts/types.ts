@@ -3,8 +3,6 @@ export const ALERT_CATEGORIES = [
   'price.percent_change',
   'price.absolute_change',
   'balance.change',
-  'order.filled',
-  'order.stop_triggered',
   'funding_rate.threshold',
   'transfer.deposit_confirmed',
   'position.liquidation_risk',

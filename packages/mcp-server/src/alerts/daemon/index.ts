@@ -14,12 +14,10 @@ import { MACOS_SENDER_BUNDLE_ID } from '../notifier/macos-sender.js';
 import { writeDaemonMeta, deleteDaemonMeta } from '../ipc.js';
 import { appendAlertEvent } from '../log.js';
 import * as funds from '../../datasources/funds.js';
-import * as orders from '../../datasources/orders.js';
 import * as market from '../../datasources/market.js';
 import * as margin from '../../datasources/margin.js';
 import * as predictions from '../../datasources/predictions.js';
 import type { BalanceSnapshot } from '../categories/balance.js';
-import type { OrderRecord } from '../categories/order.js';
 import type { TransferRecord } from '../categories/transfer.js';
 import type { FundingRateSnapshot } from '../categories/funding.js';
 import type { PositionSnapshot } from '../categories/position.js';
@@ -41,25 +39,6 @@ function buildFetchers(client: GeminiHttpClient): SchedulerFetchers {
       // Use `available` as the comparable balance — `amount` includes
       // pending/locked, which moves around without user action.
       return all.map((b) => ({ currency: b.currency, balance: b.available }));
-    },
-
-    orders: async (): Promise<OrderRecord[]> => {
-      const active = await orders.getActiveOrders(client);
-      // Limitation: getActiveOrders typically excludes terminal-state orders.
-      // For order.filled detection we rely on the brief window where Gemini
-      // returns is_live=false in the active list. A future improvement is to
-      // diff order ids across polls and call getOrderStatus on disappearances.
-      return active.map((o) => ({
-        order_id: o.order_id,
-        client_order_id: o.client_order_id,
-        symbol: o.symbol,
-        is_live: o.is_live,
-        is_cancelled: o.is_cancelled,
-        executed_amount: o.executed_amount,
-        remaining_amount: o.remaining_amount,
-        original_amount: o.original_amount,
-        stop_price: undefined,
-      }));
     },
 
     transfers: async (): Promise<TransferRecord[]> => {

@@ -73,12 +73,6 @@ assistant creates two rules — one `above`, one `below`.)
 `gemini_alert_create` with `category: "balance.change"`,
 `params: { currency: "USD", direction: "below", delta: "1000" }`.
 
-> "Let me know when order 12345 fills."
-
-`gemini_alert_create` with `category: "order.filled"`,
-`params: { orderId: "12345" }`, typically with `oneShot: true` so the rule
-auto-disables after firing.
-
 > "Wake me up if my BTC perp position is within 20% of liquidation."
 
 `gemini_alert_create` with `category: "position.liquidation_risk"`,
@@ -185,8 +179,6 @@ the human-readable summary.
 | `price.percent_change` | WebSocket | push | Symbol moves by `pct` percent within `windowMs`. Rolling baseline re-arms after each fire. |
 | `price.absolute_change` | WebSocket | push | Symbol moves by absolute `delta` (price units) within `windowMs`. `direction: "either"` fires on any move. |
 | `balance.change` | REST | 60s | Account balance for `currency` rises or falls by absolute `delta` or relative `pct`. |
-| `order.filled` | REST | 10s | A matching order transitions to fully-filled. Match by orderId, clientOrderId, or symbol. |
-| `order.stop_triggered` | REST | 10s | A stop order leaves the book with `executed_amount > 0`. |
 | `funding_rate.threshold` | REST | 5m | Perpetual funding rate for `symbol` crosses a threshold. |
 | `transfer.deposit_confirmed` | REST | 60s | A deposit reaches confirmed status. Optional `currency` filter. |
 | `position.liquidation_risk` | REST | 30s | Remaining margin for `symbol` drops at or below `marginPctRemaining` percent. |
@@ -206,12 +198,6 @@ the human-readable summary.
 
 // balance.change — USD balance falls by $1,000
 { "currency": "USD", "direction": "below", "delta": "1000" }
-
-// order.filled — any BTCUSD order
-{ "symbol": "BTCUSD" }
-
-// order.stop_triggered
-{ "symbol": "BTCUSD" }
 
 // funding_rate.threshold
 { "symbol": "BTCPERP", "direction": "above", "threshold": "0.01" }

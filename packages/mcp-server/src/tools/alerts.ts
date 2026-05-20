@@ -44,8 +44,6 @@ const CATEGORY_EXAMPLES: Record<AlertCategory, Record<string, unknown>> = {
     windowMs: 60_000,
   },
   'balance.change': { currency: 'USD', direction: 'below', delta: '1000' },
-  'order.filled': { symbol: 'BTCUSD' },
-  'order.stop_triggered': { symbol: 'BTCUSD' },
   'funding_rate.threshold': { symbol: 'BTCPERP', direction: 'above', threshold: '0.01' },
   'transfer.deposit_confirmed': { currency: 'BTC' },
   'position.liquidation_risk': { symbol: 'BTCPERP', marginPctRemaining: 20 },
@@ -60,10 +58,6 @@ const CATEGORY_DESCRIPTIONS: Record<AlertCategory, string> = {
     'Fires when a symbol moves by an absolute `delta` (price units, e.g. dollars) within `windowMs` milliseconds. Use direction="either" for any move, or "above"/"below" to require a specific direction.',
   'balance.change':
     'Fires when an account balance for `currency` rises or falls by either an absolute `delta` or a relative `pct`.',
-  'order.filled':
-    'Fires when a matching order transitions to fully-filled. Match by orderId, clientOrderId, or symbol.',
-  'order.stop_triggered':
-    'Fires when a stop order leaves the order book with executed_amount > 0 (i.e., the stop tripped).',
   'funding_rate.threshold':
     'Fires when the perpetual funding rate for `symbol` crosses a threshold.',
   'transfer.deposit_confirmed':
