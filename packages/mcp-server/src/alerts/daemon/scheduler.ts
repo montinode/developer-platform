@@ -338,7 +338,7 @@ export class Scheduler {
     } catch (err) {
       // Fetcher failures are transient — don't crash the daemon over an outage.
       // eslint-disable-next-line no-console
-      console.error(`Scheduler datasource ${ds} fetch failed:`, err);
+      console.error('Scheduler datasource %s fetch failed:', ds, err);
     }
   }
 

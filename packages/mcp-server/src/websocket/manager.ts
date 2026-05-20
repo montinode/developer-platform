@@ -56,7 +56,7 @@ export class WebSocketManager {
       this.store.addSubscription(channelStr);
       console.error(`[WSManager] Subscribed to ${channelStr}`);
     } catch (err) {
-      console.error(`[WSManager] Failed to subscribe to ${channelStr}:`, err);
+      console.error('[WSManager] Failed to subscribe to %s:', channelStr, err);
       throw err;
     }
   }
@@ -101,7 +101,7 @@ export class WebSocketManager {
       this.store.removeSubscription(channelStr);
       console.error(`[WSManager] Unsubscribed from ${channelStr}`);
     } catch (err) {
-      console.error(`[WSManager] Failed to unsubscribe from ${channelStr}:`, err);
+      console.error('[WSManager] Failed to unsubscribe from %s:', channelStr, err);
       throw err;
     }
   }
@@ -127,7 +127,7 @@ export class WebSocketManager {
       this.store.clear(symbol);
       console.error(`[WSManager] Unsubscribed from all ${symbol} channels`);
     } catch (err) {
-      console.error(`[WSManager] Failed to unsubscribe from ${symbol}:`, err);
+      console.error('[WSManager] Failed to unsubscribe from %s:', symbol, err);
       throw err;
     }
   }

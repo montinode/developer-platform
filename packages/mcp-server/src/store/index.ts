@@ -62,7 +62,7 @@ export class MarketDataStore {
         cb(event);
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`MarketDataStore listener for ${event.symbol} threw:`, err);
+        console.error('MarketDataStore listener for %s threw:', event.symbol, err);
       }
     }
   }
