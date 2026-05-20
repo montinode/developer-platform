@@ -1,8 +1,14 @@
+import { createRequire } from 'module';
 import JSONBig from 'json-bigint';
 import { config } from '../config.js';
 import { buildSignedHeaders } from '../auth/signer.js';
 
 const REQUEST_TIMEOUT_MS = 30_000;
+
+const { version: PKG_VERSION } = createRequire(import.meta.url)('../../package.json') as {
+  version: string;
+};
+const USER_AGENT = `gemini-mcp/${PKG_VERSION} (node/${process.versions.node})`;
 
 // Precision-preserving JSON parser. The Gemini API emits some numeric fields
 // — most notably prediction-market `orderId` — as JSON numbers in the 17–18
@@ -40,6 +46,7 @@ export class GeminiHttpClient {
       }
     }
     const res = await fetch(url.toString(), {
+      headers: { 'User-Agent': USER_AGENT },
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     const text = await res.text();
@@ -50,8 +57,18 @@ export class GeminiHttpClient {
   }
 
   async authenticatedPost<T>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> {
+    if (!this.apiKey || !this.apiSecret) {
+      throw new Error(
+        `Authentication required for ${endpoint}: GEMINI_API_KEY and GEMINI_API_SECRET ` +
+          'must be set in the MCP server environment. This tool is unavailable in ' +
+          'public-only mode. See README for setup instructions.'
+      );
+    }
     const fullBody = config.account ? { ...body, account: config.account } : body;
-    const headers = buildSignedHeaders(endpoint, fullBody, this.apiKey, this.apiSecret);
+    const headers = {
+      ...buildSignedHeaders(endpoint, fullBody, this.apiKey, this.apiSecret),
+      'User-Agent': USER_AGENT,
+    };
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
       method: 'POST',
       headers,
