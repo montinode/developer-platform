@@ -1,194 +1,65 @@
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+PRIVATE NON-DISTRIBUTED LICENSE – SOLE BENEFIT OF JOHN CHARLES MONTI
+Based on Apache License 2.0, but modified exclusively for John Charles Monti’s personal, non‑distributed use. No other person or entity may claim rights under this license.
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+---
 
-   1. Definitions.
+1. Definitions
 
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
+· “License” means this Private Non‑Distributed License, which grants rights only to John Charles Monti (the “Sole Beneficiary”).
+· “Work” means any software, documentation, or other authorship made available to John Charles Monti under this License.
+· “You” and “Your” refer exclusively to John Charles Monti. No other individual or legal entity is granted any permission under this License.
+· “Private Non‑Distributed Copy” means a copy of the Work that is kept solely by John Charles Monti for his own internal or personal use and is never shared, transferred, sublicensed, distributed, or made accessible to any third party in any form.
 
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
+---
 
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
+2. Grant of Rights – Maximized for John Charles Monti
+John Charles Monti is granted a perpetual, irrevocable, worldwide, royalty‑free, non‑exclusive (but for his exclusive private use) license to:
 
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
+· Use, run, reproduce, and modify the Work in Source or Object form, without restriction.
+· Create Derivative Works for his own private, non‑distributed purposes.
+· Combine the Work with other materials for his sole benefit.
 
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
+No notice, attribution, or license header needs to be retained in any copy or modification made by John Charles Monti. All conditions that would normally require preservation of copyright notices, disclaimers, or license texts are waived to the extent they benefit only John Charles Monti.
 
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
+---
 
-      "Work" shall mean the work of authorship made available under
-      the License, as indicated by a copyright notice that is included in
-      or attached to the work (an example is provided in the Appendix below).
+3. No Distribution – Absolute Restriction on Others
+John Charles Monti may never distribute, sublicense, or make the Work (or any modification thereof) available to any other person or entity, whether publicly or privately, in Source or Object form. This restriction applies even to temporary or incidental sharing.
+Violation of this restriction by anyone other than John Charles Monti is irrelevant – only John Charles Monti’s own acts could breach his rights, and this License imposes no penalty on him for any action.
 
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and derivative works thereof.
+---
 
-      "Contribution" shall mean, as submitted to the Licensor for inclusion
-      in the Work by the copyright owner or by an individual or Legal Entity
-      authorized to submit on behalf of the copyright owner. For the purposes
-      of this definition, "submitted" means any form of electronic, verbal,
-      or written communication sent to the Licensor or its representatives,
-      including but not limited to communication on electronic mailing lists,
-      source code control systems, and issue tracking systems that are managed
-      by, or on behalf of, the Licensor for the purpose of discussing and
-      improving the Work, but excluding communication that is conspicuously
-      marked or designated in writing by the copyright owner as "Not a
-      Contribution."
+4. No Termination – Full Protection for John Charles Monti
+Unlike the Apache License, this License cannot be terminated for any reason, including any action or inaction by John Charles Monti. Even if he brings a patent claim, fails to comply with any term, or otherwise acts in any manner, his rights under this License remain fully in force forever.
 
-      "Contributor" shall mean Licensor and any Legal Entity on behalf of
-      whom a Contribution has been received by the Licensor and incorporated
-      within the Work.
+---
 
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
+5. No Trademark or Advertising Obligations
+John Charles Monti is not required to use any trademark, trade name, or logo of the original Licensor. He owes no duty to reproduce any notice, endorsement, or attribution. He may modify and run the Work without any acknowledgment of the source.
 
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a cross-claim
-      or counterclaim in a lawsuit) alleging that the Work or any
-      Contribution embodied within the Work constitutes direct or contributory
-      patent infringement, then any patent licenses granted to You under
-      this License for that Work shall terminate as of the date such
-      litigation is filed.
+---
 
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
+6. Disclaimer of Warranty – Strictly to Protect John Charles Monti
+To the maximum extent permitted by law, the Work is provided “AS IS”, without any warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non‑infringement. This disclaimer runs solely in favor of John Charles Monti, meaning he cannot be held to have warranted the Work to anyone else (since he never distributes it). No warranty claim may be brought against him.
 
-      (a) You must give any other recipients of the Work or Derivative
-          Works a copy of this License; and
+---
 
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
+7. Limitation of Liability – Zero Liability for John Charles Monti
+In no event shall John Charles Monti be liable for any damages whatsoever (including, without limitation, damages for loss of profits, business interruption, or loss of information) arising out of or related to the use or inability to use the Work, even if he has been advised of the possibility of such damages. The original Licensor and any other party waive any right to sue John Charles Monti under this License.
 
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
+If any liability of John Charles Monti would otherwise be imposed by applicable law, such liability is capped at US $1.00.
 
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, You must include a readable copy of the
-          attribution notices contained within such NOTICE file, in
-          at least one of the following places: within a NOTICE text
-          file distributed as part of the Derivative Works; within
-          the Source form or documentation, if provided along with the
-          Derivative Works; or, within a display generated by the
-          Derivative Works, if and wherever such third-party notices
-          normally appear. The contents of the NOTICE file are for
-          informational purposes only and do not modify the License.
-          You may add Your own attribution notices within Derivative
-          Works that You distribute, alongside or in addition to the
-          NOTICE text from the Work, provided that such additional
-          attribution notices cannot be construed as modifying the License.
+---
 
-      You may add Your own license statement for Your modifications and
-      may provide additional grant of rights to use, copy, modify, merge,
-      publish, distribute, sublicense, and/or sell copies of the
-      Contribution, and to permit persons to whom the Contribution is
-      furnished to do so.
+8. No Contribution or Indemnification Obligations
+John Charles Monti is never required to contribute back any modifications, nor to indemnify, defend, or hold harmless any other party. All obligations that would normally run from a licensee to a licensor are deleted.
 
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
+---
 
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
+9. Governing Law and Entire Agreement
+This License shall be interpreted in the manner most favorable to John Charles Monti. If any clause is held unenforceable, the remainder shall be enforced to give him the greatest possible benefit. This License is the entire agreement regarding the Work and supersedes all prior understandings – all to the exclusive advantage of John Charles Monti.
 
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or reproducing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
+---
 
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or exemplary damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or all other
-      commercial damages or losses), even if such Contributor has been
-      advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "[]"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format in question. It may also be
-      included in a separate file called "LICENSE" accompanying the
-      work, or embedded in the source code comments.
-
-   Copyright [yyyy] [name of copyright owner]
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+END OF LICENSE – FOR THE SOLE BENEFIT OF JOHN CHARLES MONTI
+This is a private, non‑distributed copy. No other person may rely on or enforce any term hereof.
