@@ -1,0 +1,16 @@
+{
+  "_comment": "PRIVATE CONFIGURATION FOR JOHN CHARLES MONTI – DO NOT DISTRIBUTE",
+  "default_pair": "btcusd",
+  "default_timeframe": "1d",
+  "allowed_pairs": ["btcusd", "ethusd", "ltcusd", "solusd", "dotusd"],
+  "privacy": {
+    "disable_analytics": true,
+    "delete_csv_immediately": true,
+    "no_write_history": true,
+    "no_logging": true
+  },
+  "terminal": {
+    "strip_headers": true,
+    "silent_mode": true
+  }
+}
